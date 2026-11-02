@@ -40,14 +40,14 @@ An end-to-end UI test automation framework for the [SauceDemo](https://www.sauce
 
 ## Tech stack
 
-| Area | Tool |
-|---|---|
+| Area                               | Tool                                      |
+| ---------------------------------- | ----------------------------------------- |
 | Test runner and browser automation | [Playwright Test](https://playwright.dev) |
-| Language | TypeScript |
-| Runtime | Node.js (LTS) |
-| Configuration | dotenv |
-| CI/CD | GitHub Actions |
-| Reporting | Playwright HTML report |
+| Language                           | TypeScript                                |
+| Runtime                            | Node.js (LTS)                             |
+| Configuration                      | dotenv                                    |
+| CI/CD                              | GitHub Actions                            |
+| Reporting                          | Playwright HTML report                    |
 
 ## Project structure
 
@@ -107,12 +107,12 @@ test(
 
 ## Test coverage
 
-| Feature | Scenarios covered | Tags |
-|---|---|---|
-| Login | Valid login for each test user, invalid credentials error, locked-out user error | `@login` `@smoke` `@regression` |
-| Products listing | Product list shows 6 items, open a random product, add a random product to cart, cart badge counts from 1 to 6, find a product by name | `@products` `@smoke` `@regression` |
-| Product details (PDP) | Name, price, image and description match the listing; Add to cart toggles to Remove and updates the badge; Back to Products navigation | `@pdp` `@regression` |
-| Cart | Added product is shown in the cart along with the Remove, Continue Shopping and Checkout buttons | `@smoke` |
+| Feature         | Test IDs   | Scenarios covered                                                                                                                                              | Tags                               |
+| --------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
+| Login           | TID001–003 | Valid login for each test user; invalid credentials error; locked-out user error                                                                               | `@login` `@smoke` `@regression`    |
+| Products        | TID004–008 | Open a random product; add a random product to the cart; cart badge counts up to 6; removing from the list updates the badge; product from test data is listed | `@products` `@smoke` `@regression` |
+| Product details | TID009–011 | Name, price, image and description match the list; add and remove from the details page; back to products navigation                                           | `@pdp` `@regression`               |
+| Cart            | TID012–017 | Added product and price shown; remove empties the cart; two products in order; continue shopping; checkout; cart keeps items after refresh                     | `@cart` `@smoke` `@regression`     |
 
 Every scenario runs for each configured test user on **5 browser/device projects**.
 
@@ -145,16 +145,16 @@ Each file needs a `BASE_URL` (for example `https://www.saucedemo.com`).
 
 ## Running tests
 
-| Command | What it does |
-|---|---|
-| `npm test` | Run all tests on all projects (QA by default) |
-| `npm run smoke` | Run only `@smoke` tests |
-| `npm run regression` | Run only `@regression` tests |
-| `npm run chromium` / `firefox` / `webkit` | Run on a single browser |
-| `npm run headed` | Run with the browser visible |
-| `npm run report` | Open the last HTML report |
-| `npx playwright test --ui` | Open Playwright UI mode for interactive debugging |
-| `npx playwright test --grep @login` | Run one feature by tag |
+| Command                                   | What it does                                      |
+| ----------------------------------------- | ------------------------------------------------- |
+| `npm test`                                | Run all tests on all projects (QA by default)     |
+| `npm run smoke`                           | Run only `@smoke` tests                           |
+| `npm run regression`                      | Run only `@regression` tests                      |
+| `npm run chromium` / `firefox` / `webkit` | Run on a single browser                           |
+| `npm run headed`                          | Run with the browser visible                      |
+| `npm run report`                          | Open the last HTML report                         |
+| `npx playwright test --ui`                | Open Playwright UI mode for interactive debugging |
+| `npx playwright test --grep @login`       | Run one feature by tag                            |
 
 **Run against UAT:**
 
@@ -168,12 +168,12 @@ $env:ENV="uat"; npx playwright test
 
 ## Environments and test data
 
-| Source | Used for |
-|---|---|
-| `.env.qa`, `.env.uat` | `BASE_URL` for local runs |
-| `testdata/credentials.json` | Test users and product keywords per environment (local runs) |
-| GitHub Variables `BASE_URL_QA`, `BASE_URL_UAT` | `BASE_URL` in CI |
-| GitHub Secrets `USERNAME`, `PASSWORD` | Test user credentials in CI |
+| Source                                            | Used for                                                     |
+| ------------------------------------------------- | ------------------------------------------------------------ |
+| `.env.qa`, `.env.uat`                             | `BASE_URL` for local runs                                    |
+| `testdata/credentials.json`                       | Test users and product keywords per environment (local runs) |
+| GitHub Variables `BASE_URL_QA`, `BASE_URL_UAT`    | `BASE_URL` in CI                                             |
+| GitHub Secrets `SAUCE_USERNAME`, `SAUCE_PASSWORD` | Test user credentials in CI                                  |
 
 Real secrets are never committed. `.env*` files are git-ignored, except `.env.example`.
 
@@ -181,7 +181,7 @@ Real secrets are never committed. `.env*` files are git-ignored, except `.env.ex
 
 The workflow in [`.github/workflows/playwright.yml`](.github/workflows/playwright.yml):
 
-- **Triggers:** every push and pull request to `main`, plus manual runs (*Actions → Playwright Tests → Run workflow*) where you choose **QA** or **UAT**.
+- **Triggers:** every push and pull request to `main`, plus manual runs (_Actions → Playwright Tests → Run workflow_) where you choose **QA** or **UAT**.
 - **Steps:** check out the code, set up Node LTS, `npm ci`, install the Playwright browsers, run the tests with environment variables and secrets, then upload the HTML report as an artifact (kept 30 days).
 - **CI-specific settings:** 2 retries, 1 worker, and `forbidOnly` so a stray `test.only` can't slip through.
 
