@@ -13,7 +13,7 @@ for (const user of testUsers) {
     );
 
     test(
-      `TID05- Add selected product to the cart - ${user.userName}`,
+      `TID005- Add selected product to the cart - ${user.userName}`,
       { tag: ["@products", "@smoke"] },
       async ({ loginAs, productsPage }) => {
         await loginAs(user.userName, user.password);
@@ -22,7 +22,7 @@ for (const user of testUsers) {
     );
 
     test(
-      `TID06 - Cart Badge count verification - ${user.userName}`,
+      `TID006 - Cart Badge count verification - ${user.userName}`,
       { tag: ["@products", "@smoke"] },
       async ({ loginAs, productsPage }) => {
         await loginAs(user.userName, user.password);
@@ -35,7 +35,20 @@ for (const user of testUsers) {
     );
 
     test(
-      `TID07- Search product - ${user.userName}`,
+      `TID007 - Remove product and verify cart badge - ${user.userName}`,
+      { tag: ["@products", "@regression"] },
+      async ({ loginAs, productsPage }) => {
+        await loginAs(user.userName, user.password);
+        await productsPage.addToCartMethod();
+        await productsPage.addToCartMethod();
+        await productsPage.verifyCartBadge("2");
+        await productsPage.removeProductFromtheProducts();
+        await productsPage.verifyCartBadge("1");
+      }
+    );
+
+    test(
+      `TID008- Search product - ${user.userName}`,
       { tag: ["@products", "@regression"] },
       async ({ loginAs, productsPage }) => {
         await loginAs(user.userName, user.password);
