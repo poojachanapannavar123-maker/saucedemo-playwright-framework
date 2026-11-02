@@ -30,6 +30,13 @@ export class CartPage {
     this.cartBadge = page.locator('[data-test="shopping-cart-badge"]');
   }
 
+  /**
+   * Verifies the product name and price on the cart page and visibility of the cart page buttons
+   * @param productName
+   * @param productPrice
+   * @returns A promise that resolves when all cart detail assertion passes
+   * @author Pooja
+   */
   async verifyCartDetails(
     productName: string,
     productPrice: string
