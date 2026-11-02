@@ -102,13 +102,26 @@ export class ProductsPage {
       .locator('[data-test="inventory-item-name"]')
       .innerText();
 
+    const productPrice = await selectedProduct
+      .locator('[data-test="inventory-item-price"]')
+      .innerText();
+
     await selectedProduct
       .getByRole("button", {
         name: "Add to cart",
       })
       .click();
 
-    return productName;
+    return { productName, productPrice };
+  }
+
+  async removeProductFromtheProducts() {
+    const selectedProduct = this.product
+      .filter({
+        has: this.page.getByRole("button", { name: "Remove" }),
+      })
+      .first();
+    await selectedProduct.getByRole("button", { name: "Remove" }).click();
   }
 
   /**
