@@ -28,7 +28,7 @@ for (const user of testUsers) {
         await loginAs(user.userName, user.password);
         await productsPage.addRandomProductToCart();
         await productsPage.goToCart();
-        await cartPage.removeProductfromCart();
+        await cartPage.removeProductAndVerifyCartEmpty();
       }
     );
 
@@ -40,10 +40,10 @@ for (const user of testUsers) {
         const firstProduct = await productsPage.addRandomProductToCart();
         const secondProduct = await productsPage.addRandomProductToCart();
         await productsPage.goToCart();
-        await cartPage.multipleProductsonCart(
+        await cartPage.verifyProductsInCart([
           firstProduct.productName,
-          secondProduct.productName
-        );
+          secondProduct.productName,
+        ]);
       }
     );
 
@@ -63,7 +63,7 @@ for (const user of testUsers) {
       async ({ loginAs, productsPage, cartPage }) => {
         await loginAs(user.userName, user.password);
         await productsPage.goToCart();
-        await cartPage.checkoutonCart();
+        await cartPage.goToCheckout();
       }
     );
 

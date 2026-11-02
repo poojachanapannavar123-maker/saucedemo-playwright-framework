@@ -47,15 +47,15 @@ export class ProductDetailsPage {
   ): Promise<void> {
     await expect(
       this.nameLabel,
-      "Product name on the details does not match the products List "
+      "Product name on the details page does not match the products list "
     ).toHaveText(productName);
     await expect(
       this.priceLabel,
-      "Product price on the details does not match the products List"
+      "Product price on the details page does not match the products list"
     ).toHaveText(productPrice);
     await expect(
       this.image,
-      "Product image on the details does not match the products List"
+      "Product image on the details page does not match the products list"
     ).toHaveAttribute("src", productImage);
     await expect(
       this.description,
