@@ -1,37 +1,35 @@
 import { Page, Locator, expect } from "@playwright/test";
 
 export class ProductDetailsPage {
-  page: Page;
-  addtoCartvisible: Locator;
-  productNameonDetailspage: Locator;
-  priceonpdp: Locator;
-  imageonpdp: Locator;
-  descriptiononpdp: Locator;
-  removeButton: Locator;
-  cartBadge: Locator;
-  backtoproductNaviagtion: Locator;
+  readonly page: Page;
+  readonly addToCartButton: Locator;
+  readonly nameLabel: Locator;
+  readonly priceLabel: Locator;
+  readonly image: Locator;
+  readonly description: Locator;
+  readonly removeButton: Locator;
+  readonly cartBadge: Locator;
+  readonly backToProductsButton: Locator;
 
   constructor(page: Page) {
     this.page = page;
-    this.productNameonDetailspage = page.locator(
+    this.nameLabel = page.locator(
       '.inventory_details [data-test="inventory-item-name"]'
     );
-    this.priceonpdp = page.locator(
+    this.priceLabel = page.locator(
       '.inventory_details [data-test="inventory-item-price"]'
     );
-    this.imageonpdp = page.locator(".inventory_details_img");
-    this.descriptiononpdp = page.locator(
+    this.image = page.locator(".inventory_details_img");
+    this.description = page.locator(
       '.inventory_details [data-test="inventory-item-desc"]'
     );
-    this.addtoCartvisible = page
+    this.addToCartButton = page
       .locator(".inventory_details")
       .getByRole("button", { name: "Add to cart", exact: true });
 
     this.removeButton = page.getByRole("button", { name: "Remove" });
-    this.cartBadge = this.page.locator('[data-test="shopping-cart-badge"]');
-    this.backtoproductNaviagtion = this.page.locator(
-      '[data-test="back-to-products"]'
-    );
+    this.cartBadge = page.locator('[data-test="shopping-cart-badge"]');
+    this.backToProductsButton = page.locator('[data-test="back-to-products"]');
   }
 
   /**
@@ -46,41 +44,58 @@ export class ProductDetailsPage {
     productName: string,
     productPrice: string,
     productImage: string
-  ) {
-    await expect(this.productNameonDetailspage).toHaveText(productName);
-    await expect(this.priceonpdp).toHaveText(productPrice);
-    await expect(this.imageonpdp).toHaveAttribute("src", productImage);
-    await expect(this.descriptiononpdp).not.toBeEmpty();
-    await expect(this.addtoCartvisible).toBeVisible();
-    await expect(this.addtoCartvisible).toBeEnabled();
+  ): Promise<void> {
+    await expect(
+      this.nameLabel,
+      "Product name on the details does not match the products List "
+    ).toHaveText(productName);
+    await expect(
+      this.priceLabel,
+      "Product price on the details does not match the products List"
+    ).toHaveText(productPrice);
+    await expect(
+      this.image,
+      "Product image on the details does not match the products List"
+    ).toHaveAttribute("src", productImage);
+    await expect(
+      this.description,
+      "Product description should not be empty"
+    ).not.toBeEmpty();
+    await expect(
+      this.addToCartButton,
+      "Add to cart should be visible"
+    ).toBeVisible();
+    await expect(
+      this.addToCartButton,
+      "Add to cart button should be enabled"
+    ).toBeEnabled();
   }
 
   /**
-   * Verifies Add to cart button and remove button behaviour on product details page and cart badge updates
-   * Checks that adding a product displays the Remove button and updates the cart badge to 1, then verifies that removing the product resets the cart.
+   * Adds the product to the cart from the details page, verifies the Remove button and cart badge, then removes it again
    * @returns A promise that resolves when all the assertion passes
    * @author Pooja
    */
-  async verifyRemovebutton() {
-    await expect(this.addtoCartvisible).toBeVisible();
-    await expect(this.cartBadge).not.toBeVisible();
+  async verifyAddAndRemoveFromCart(): Promise<void> {
+    await expect(this.addToCartButton).toBeVisible();
+    await expect(this.cartBadge).toBeHidden();
 
-    await this.addtoCartvisible.click();
+    await this.addToCartButton.click();
     await expect(this.removeButton).toBeVisible();
 
     await expect(this.cartBadge).toHaveText("1");
     await this.removeButton.click();
-    await expect(this.addtoCartvisible).toBeVisible();
-    await expect(this.cartBadge).not.toBeVisible();
+    await expect(this.addToCartButton).toBeVisible();
+    await expect(this.cartBadge).toBeHidden();
   }
 
   /**
-   * Verifies the successful navigation of the back to products page button and verifies the assertion on respective landing page
-   * @return A promise that resolves when navigation and the URL assertion passes
+   * Clicks Back to products and verifies the products page is shown
+   * @returns A promise that resolves when navigation and the URL assertion passes
    * @author Pooja
    */
-  async verifyBacktoProductsNavigation() {
-    await this.backtoproductNaviagtion.click();
+  async verifyBackToProductsNavigation(): Promise<void> {
+    await this.backToProductsButton.click();
     await expect(this.page).toHaveURL(/inventory\.html/);
   }
 }

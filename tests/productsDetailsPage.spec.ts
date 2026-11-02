@@ -29,7 +29,7 @@ for (const user of testUsers) {
       async ({ loginAs, productsPage, productDetailsPage }) => {
         await loginAs(user.userName, user.password);
         await productsPage.openRandomProduct();
-        await productDetailsPage.verifyRemovebutton();
+        await productDetailsPage.verifyAddAndRemoveFromCart();
       }
     );
 
@@ -39,7 +39,7 @@ for (const user of testUsers) {
       async ({ loginAs, productsPage, productDetailsPage }) => {
         await loginAs(user.userName, user.password);
         await productsPage.openRandomProduct();
-        await productDetailsPage.verifyBacktoProductsNavigation();
+        await productDetailsPage.verifyBackToProductsNavigation();
       }
     );
   });
