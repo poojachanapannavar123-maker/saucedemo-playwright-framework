@@ -4,8 +4,6 @@ import { getRandomIndex } from "../utils/helper";
 export class ProductsPage {
   readonly page: Page;
   readonly product: Locator;
-  readonly productText: Locator;
-  readonly addToCart: Locator;
   readonly cartIcon: Locator;
   readonly cartBadge: Locator;
   readonly productListContainer: Locator;
@@ -21,7 +19,7 @@ export class ProductsPage {
   }
 
   /**
-   * Verifies that the product list container is visible and displays six products.
+   * Verifies that the product list container is visible and displays expected number of products.
    * @returns A promise that resolves all the assertion passes
    * @author Pooja
    */
@@ -58,7 +56,7 @@ export class ProductsPage {
   }
 
   /**
-   * Verifies the navigation to the cart page
+   * Clicks the cart icon to open the cart page
    * @returns Promise that resolves when the navigation completes
    * @author Pooja
    */
@@ -67,8 +65,8 @@ export class ProductsPage {
   }
 
   /**
-   * Randomly selects a product and adds it to the cart, Indentifies products with visible add to cart before selecting one.
-   * @returns A promise that resolves to the name of the product added to the cart
+   *Randomly selects a product that is not yet in the cart and adds it to the cart
+   * @returns A promise that resolves to the name and price of the added product
    * @throws An error if no products are available to add it to the cart
    * @author Pooja
    */
@@ -82,7 +80,7 @@ export class ProductsPage {
     const count: number = await availableProducts.count();
 
     if (count === 0) {
-      throw new Error("No products left to add the cart");
+      throw new Error("No products left to add to the cart");
     }
 
     const selectedProduct = availableProducts.nth(getRandomIndex(count));
@@ -104,7 +102,7 @@ export class ProductsPage {
    * @returns A promise that resolves when the product is removed
    * @author Pooja
    */
-  async removeFirstProductInCart() {
+  async removeFirstProductInCart(): Promise<void> {
     await this.product.getByRole("button", { name: "Remove" }).first().click();
   }
 
@@ -119,14 +117,14 @@ export class ProductsPage {
   }
 
   /**
-   * filters the product list using the specifies keyword and verifies that the matching product is visible.
-   * @param productkeyword
+   *Verifies that a product with the given name is shown in the list
+   * @param productName
    * @returns A promise that resolves when the assertion passes
    * @author Pooja
    */
-  async verifyProductIsListed(productkeyword: string) {
+  async verifyProductIsListed(productName: string): Promise<void> {
     const matchingProduct = this.product.filter({
-      hasText: productkeyword,
+      hasText: productName,
     });
     await expect(matchingProduct).toBeVisible();
   }

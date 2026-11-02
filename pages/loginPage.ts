@@ -60,7 +60,7 @@ export class LoginPage {
    * @param userName
    * @param password
    * @param expectedError
-   * @returns A Promose that resolves when the error assertion passes
+   * @returns A Promise that resolves when the error assertion passes
    * @author Pooja
    */
   async verifyLoginError(
