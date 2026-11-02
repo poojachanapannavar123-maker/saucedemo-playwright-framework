@@ -2,13 +2,13 @@ import { Locator, Page, expect } from "@playwright/test";
 import { getRandomIndex } from "../utils/helper";
 
 export class ProductsPage {
-  page: Page;
-  product: Locator;
-  productText: Locator;
-  addToCart: Locator;
-  cartIcon: Locator;
-  cartBadge: Locator;
-  productListContainer: Locator;
+  readonly page: Page;
+  readonly product: Locator;
+  readonly productText: Locator;
+  readonly addToCart: Locator;
+  readonly cartIcon: Locator;
+  readonly cartBadge: Locator;
+  readonly productListContainer: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -16,7 +16,6 @@ export class ProductsPage {
     this.productListContainer = page.locator(
       '[data-test="inventory-container"]'
     );
-    this.productText = page.locator(".inventory_item_name ");
     this.cartIcon = page.locator('[data-test="shopping-cart-link"]');
     this.cartBadge = page.locator('[data-test="shopping-cart-badge"]');
   }
@@ -26,9 +25,9 @@ export class ProductsPage {
    * @returns A promise that resolves all the assertion passes
    * @author Pooja
    */
-  async verifyproductListVisible() {
+  async verifyProductListVisible(expectedCount: number): Promise<void> {
     await expect(this.productListContainer).toBeVisible();
-    await expect(this.product).toHaveCount(6);
+    await expect(this.product).toHaveCount(expectedCount);
   }
 
   /**
@@ -36,7 +35,7 @@ export class ProductsPage {
    * @returns A promise containing selected product Name,Price and Image.
    * @author Pooja
    */
-  async randomlypickedproduct(): Promise<{
+  async openRandomProduct(): Promise<{
     productName: string;
     productPrice: string;
     productImage: string;
@@ -50,7 +49,6 @@ export class ProductsPage {
     const productPrice = await selectedproduct
       .locator('[data-test="inventory-item-price"]')
       .innerText();
-    console.log("Listing price:", productPrice);
     const productImage = await selectedproduct
       .locator(".inventory_item_img img")
       .getAttribute("src");
@@ -64,7 +62,7 @@ export class ProductsPage {
    * @returns Promise that resolves when the navigation completes
    * @author Pooja
    */
-  async goToCart() {
+  async goToCart(): Promise<void> {
     await this.cartIcon.click();
   }
 
@@ -74,30 +72,20 @@ export class ProductsPage {
    * @throws An error if no products are available to add it to the cart
    * @author Pooja
    */
-  async addToCartMethod() {
-    const count: number = await this.product.count();
-    const availableProductsIndexes: number[] = [];
+  async addRandomProductToCart(): Promise<{
+    productName: string;
+    productPrice: string;
+  }> {
+    const availableProducts = this.product.filter({
+      has: this.page.getByRole("button", { name: "Add to cart" }),
+    });
+    const count: number = await availableProducts.count();
 
-    for (let i = 0; i < count; i++) {
-      const selectedProduct = this.product.nth(i);
-      const addButton = selectedProduct.getByRole("button", {
-        name: "Add to cart",
-      });
-
-      if (await addButton.isVisible()) {
-        availableProductsIndexes.push(i);
-      }
+    if (count === 0) {
+      throw new Error("No products left to add the cart");
     }
 
-    if (availableProductsIndexes.length === 0) {
-      throw new Error("No products left to add to cart");
-    }
-
-    const randomIndex = getRandomIndex(availableProductsIndexes.length);
-    const selectedProduct = this.product.nth(
-      availableProductsIndexes[randomIndex]
-    );
-
+    const selectedProduct = availableProducts.nth(getRandomIndex(count));
     const productName = await selectedProduct
       .locator('[data-test="inventory-item-name"]')
       .innerText();
@@ -106,22 +94,18 @@ export class ProductsPage {
       .locator('[data-test="inventory-item-price"]')
       .innerText();
 
-    await selectedProduct
-      .getByRole("button", {
-        name: "Add to cart",
-      })
-      .click();
-
+    await selectedProduct.getByRole("button", { name: "Add to cart" }).click();
     return { productName, productPrice };
   }
 
-  async removeProductFromtheProducts() {
-    const selectedProduct = this.product
-      .filter({
-        has: this.page.getByRole("button", { name: "Remove" }),
-      })
-      .first();
-    await selectedProduct.getByRole("button", { name: "Remove" }).click();
+  /**
+   * On the products page, clicks the Remove button of the first product
+   * that is already in the cart, which removes it from the cart
+   * @returns A promise that resolves when the product is removed
+   * @author Pooja
+   */
+  async removeFirstProductInCart() {
+    await this.product.getByRole("button", { name: "Remove" }).first().click();
   }
 
   /**
@@ -140,7 +124,7 @@ export class ProductsPage {
    * @returns A promise that resolves when the assertion passes
    * @author Pooja
    */
-  async filteredProduct(productkeyword: string) {
+  async verifyProductIsListed(productkeyword: string) {
     const matchingProduct = this.product.filter({
       hasText: productkeyword,
     });

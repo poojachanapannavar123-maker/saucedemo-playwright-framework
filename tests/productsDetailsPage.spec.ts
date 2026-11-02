@@ -13,7 +13,7 @@ for (const user of testUsers) {
         );
 
         await loginAs(user.userName, user.password);
-        const selectedProduct = await productsPage.randomlypickedproduct();
+        const selectedProduct = await productsPage.openRandomProduct();
 
         await productDetailsPage.verifyProductDetails(
           selectedProduct.productName,
@@ -28,7 +28,7 @@ for (const user of testUsers) {
       { tag: ["@pdp", "@regression"] },
       async ({ loginAs, productsPage, productDetailsPage }) => {
         await loginAs(user.userName, user.password);
-        await productsPage.randomlypickedproduct();
+        await productsPage.openRandomProduct();
         await productDetailsPage.verifyRemovebutton();
       }
     );
@@ -38,7 +38,7 @@ for (const user of testUsers) {
       { tag: ["@pdp", "@regression"] },
       async ({ loginAs, productsPage, productDetailsPage }) => {
         await loginAs(user.userName, user.password);
-        await productsPage.randomlypickedproduct();
+        await productsPage.openRandomProduct();
         await productDetailsPage.verifyBacktoProductsNavigation();
       }
     );

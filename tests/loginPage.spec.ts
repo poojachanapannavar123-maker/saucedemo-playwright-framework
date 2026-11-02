@@ -4,6 +4,7 @@ import { test } from "../fixtures/contextFixture";
 const INVALID_CREDENTIALS_ERROR =
   "Epic sadface: Username and password do not match any user in this service";
 const LOCKED_OUT_ERROR = "Epic sadface: Sorry, this user has been locked out.";
+const EXPECTED_PRODUCT_COUNT = 6;
 
 test.describe("Sauce demo Login Page", () => {
   for (const user of testUsers) {
@@ -12,7 +13,7 @@ test.describe("Sauce demo Login Page", () => {
       { tag: ["@login", "@smoke"] },
       async ({ loginAs, productsPage }) => {
         await loginAs(user.userName, user.password);
-        await productsPage.verifyproductListVisible();
+        await productsPage.verifyProductListVisible(EXPECTED_PRODUCT_COUNT);
       }
     );
   }

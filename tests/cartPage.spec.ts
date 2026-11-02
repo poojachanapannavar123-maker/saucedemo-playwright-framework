@@ -14,7 +14,7 @@ for (const user of testUsers) {
         await loginAs(user.userName, user.password);
 
         const { productName, productPrice } =
-          await productsPage.addToCartMethod();
+          await productsPage.addRandomProductToCart();
         await productsPage.goToCart();
 
         await cartPage.verifyCartDetails(productName, productPrice);
@@ -26,7 +26,7 @@ for (const user of testUsers) {
       { tag: ["@cart", "@regression"] },
       async ({ loginAs, productsPage, cartPage }) => {
         await loginAs(user.userName, user.password);
-        await productsPage.addToCartMethod();
+        await productsPage.addRandomProductToCart();
         await productsPage.goToCart();
         await cartPage.removeProductfromCart();
       }
@@ -37,8 +37,8 @@ for (const user of testUsers) {
       { tag: ["@cart", "@regression"] },
       async ({ loginAs, productsPage, cartPage }) => {
         await loginAs(user.userName, user.password);
-        const firstProduct = await productsPage.addToCartMethod();
-        const secondProduct = await productsPage.addToCartMethod();
+        const firstProduct = await productsPage.addRandomProductToCart();
+        const secondProduct = await productsPage.addRandomProductToCart();
         await productsPage.goToCart();
         await cartPage.multipleProductsonCart(
           firstProduct.productName,
@@ -77,7 +77,7 @@ for (const user of testUsers) {
         );
         await loginAs(user.userName, user.password);
         const { productName, productPrice } =
-          await productsPage.addToCartMethod();
+          await productsPage.addRandomProductToCart();
         await productsPage.goToCart();
         await page.reload();
         await cartPage.verifyCartDetails(productName, productPrice);

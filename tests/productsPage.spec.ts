@@ -8,7 +8,7 @@ for (const user of testUsers) {
       { tag: ["@products", "@smoke"] },
       async ({ loginAs, productsPage }) => {
         await loginAs(user.userName, user.password);
-        await productsPage.randomlypickedproduct();
+        await productsPage.openRandomProduct();
       }
     );
 
@@ -17,7 +17,7 @@ for (const user of testUsers) {
       { tag: ["@products", "@smoke"] },
       async ({ loginAs, productsPage }) => {
         await loginAs(user.userName, user.password);
-        await productsPage.addToCartMethod();
+        await productsPage.addRandomProductToCart();
       }
     );
 
@@ -28,7 +28,7 @@ for (const user of testUsers) {
         await loginAs(user.userName, user.password);
 
         for (let count = 1; count <= 6; count++) {
-          await productsPage.addToCartMethod();
+          await productsPage.addRandomProductToCart();
           await productsPage.verifyCartBadge(count.toString());
         }
       }
@@ -39,10 +39,10 @@ for (const user of testUsers) {
       { tag: ["@products", "@regression"] },
       async ({ loginAs, productsPage }) => {
         await loginAs(user.userName, user.password);
-        await productsPage.addToCartMethod();
-        await productsPage.addToCartMethod();
+        await productsPage.addRandomProductToCart();
+        await productsPage.addRandomProductToCart();
         await productsPage.verifyCartBadge("2");
-        await productsPage.removeProductFromtheProducts();
+        await productsPage.removeFirstProductInCart();
         await productsPage.verifyCartBadge("1");
       }
     );
@@ -52,7 +52,7 @@ for (const user of testUsers) {
       { tag: ["@products", "@regression"] },
       async ({ loginAs, productsPage }) => {
         await loginAs(user.userName, user.password);
-        await productsPage.filteredProduct(products);
+        await productsPage.verifyProductIsListed(products);
       }
     );
   });
