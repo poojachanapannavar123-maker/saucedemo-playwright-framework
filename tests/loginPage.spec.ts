@@ -6,10 +6,10 @@ const INVALID_CREDENTIALS_ERROR =
 const LOCKED_OUT_ERROR = "Epic sadface: Sorry, this user has been locked out.";
 const EXPECTED_PRODUCT_COUNT = 6;
 
-test.describe("Sauce demo Login Page", () => {
+test.describe("Login Page", () => {
   for (const user of testUsers) {
     test(
-      `TID001 Successful Login ${user.userName}`,
+      `TID001 - Successful login - ${user.userName}`,
       { tag: ["@login", "@smoke"] },
       async ({ loginAs, productsPage }) => {
         await loginAs(user.userName, user.password);
@@ -19,7 +19,7 @@ test.describe("Sauce demo Login Page", () => {
   }
 
   test(
-    `TID002 Invalid Login`,
+    `TID002 - Invalid credentials show an error`,
     { tag: ["@login", "@regression"] },
     async ({ loginPage }) => {
       await loginPage.goTo();
@@ -31,7 +31,7 @@ test.describe("Sauce demo Login Page", () => {
     }
   );
   test(
-    `TID003 Lockedoutuser login`,
+    `TID003  - Locked out user sees an error`,
     { tag: ["@login", "@regression"] },
     async ({ loginPage }) => {
       await loginPage.goTo();

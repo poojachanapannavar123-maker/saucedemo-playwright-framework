@@ -1,10 +1,10 @@
 import { testUsers, products } from "../testdata/credentials";
 import { test } from "../fixtures/contextFixture";
 
-for (const user of testUsers) {
-  test.describe("Sauce Demo Products Page", () => {
+test.describe("Products Page", () => {
+  for (const user of testUsers) {
     test(
-      `TID004-category actions - ${user.userName}`,
+      `TID004- Open a random product - ${user.userName}`,
       { tag: ["@products", "@smoke"] },
       async ({ loginAs, productsPage }) => {
         await loginAs(user.userName, user.password);
@@ -13,7 +13,7 @@ for (const user of testUsers) {
     );
 
     test(
-      `TID005- Add selected product to the cart - ${user.userName}`,
+      `TID005- Add a random product to the cart - ${user.userName}`,
       { tag: ["@products", "@smoke"] },
       async ({ loginAs, productsPage }) => {
         await loginAs(user.userName, user.password);
@@ -22,7 +22,7 @@ for (const user of testUsers) {
     );
 
     test(
-      `TID006 - Cart Badge count verification - ${user.userName}`,
+      `TID006 - Cart badge counts up to 6 - ${user.userName}`,
       { tag: ["@products", "@smoke"] },
       async ({ loginAs, productsPage }) => {
         await loginAs(user.userName, user.password);
@@ -35,7 +35,7 @@ for (const user of testUsers) {
     );
 
     test(
-      `TID007 - Remove product and verify cart badge - ${user.userName}`,
+      `TID007 -  Remove a product from the list updates the badge - ${user.userName}`,
       { tag: ["@products", "@regression"] },
       async ({ loginAs, productsPage }) => {
         await loginAs(user.userName, user.password);
@@ -48,12 +48,12 @@ for (const user of testUsers) {
     );
 
     test(
-      `TID008- Search product - ${user.userName}`,
+      `TID008- Product from test data is listed - ${user.userName}`,
       { tag: ["@products", "@regression"] },
       async ({ loginAs, productsPage }) => {
         await loginAs(user.userName, user.password);
         await productsPage.verifyProductIsListed(products);
       }
     );
-  });
-}
+  }
+});
