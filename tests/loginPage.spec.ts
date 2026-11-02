@@ -1,6 +1,10 @@
 import { testUsers } from "../testdata/credentials";
 import { test } from "../fixtures/contextFixture";
 
+const INVALID_CREDENTIALS_ERROR =
+  "Epic sadface: Username and password do not match any user in this service";
+const LOCKED_OUT_ERROR = "Epic sadface: Sorry, this user has been locked out.";
+
 test.describe("Sauce demo Login Page", () => {
   for (const user of testUsers) {
     test(
@@ -18,7 +22,11 @@ test.describe("Sauce demo Login Page", () => {
     { tag: ["@login", "@regression"] },
     async ({ loginPage }) => {
       await loginPage.goTo();
-      await loginPage.invalidLoginMethod("invalid_user", "Test@123");
+      await loginPage.invalidLoginMethod(
+        "invalid_user",
+        "Test@123",
+        INVALID_CREDENTIALS_ERROR
+      );
     }
   );
   test(
@@ -26,7 +34,11 @@ test.describe("Sauce demo Login Page", () => {
     { tag: ["@login", "@regression"] },
     async ({ loginPage }) => {
       await loginPage.goTo();
-      await loginPage.lockedoutUserMethod("locked_out_user", "secret_sauce");
+      await loginPage.lockedoutUserMethod(
+        "locked_out_user",
+        "secret_sauce",
+        LOCKED_OUT_ERROR
+      );
     }
   );
 });
