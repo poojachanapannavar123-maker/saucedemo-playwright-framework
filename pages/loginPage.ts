@@ -1,19 +1,19 @@
 import { Page, Locator, expect } from "@playwright/test";
 
 export class LoginPage {
-  page: Page;
-  username: Locator;
-  password: Locator;
-  loginButton: Locator;
-  productList: Locator;
-  invalidError: Locator;
+  readonly page: Page;
+  readonly username: Locator;
+  readonly password: Locator;
+  readonly loginButton: Locator;
+  readonly productList: Locator;
+  readonly invalidError: Locator;
 
   constructor(page: Page) {
     this.page = page;
     this.username = page.getByPlaceholder("Username");
     this.password = page.getByPlaceholder("Password");
     this.loginButton = page.getByRole("button", { name: "Login" });
-    this.productList = page.locator('[data-test = "inventory-container"]');
+    this.productList = page.locator('[data-test="inventory-container"]');
     this.invalidError = page.getByRole("alert");
   }
 
@@ -22,7 +22,7 @@ export class LoginPage {
    * @returns Promise that resolves when the navigation completes
    * @author Pooja
    */
-  async goTo() {
+  async goTo(): Promise<void> {
     await this.page.goto("/");
   }
 
@@ -56,13 +56,14 @@ export class LoginPage {
   }
 
   /**
-   * Attempt to login with invalid username and password and verifies the error message
+   * Attempts to log in and verifies the expected error message is shown
    * @param userName
    * @param password
+   * @param expectedError
    * @returns A Promose that resolves when the error assertion passes
    * @author Pooja
    */
-  async invalidLoginMethod(
+  async verifyLoginError(
     userName: string,
     password: string,
     expectedError: string
@@ -70,26 +71,7 @@ export class LoginPage {
     await this.submitCredentials(userName, password);
     await expect(
       this.invalidError,
-      "Epic sadface: Username and password do not match any user in this service"
+      "Login error message is not as expected"
     ).toContainText(expectedError);
-  }
-
-  /**
-   * Attempt to login with locked username and password and verifies the error message
-   * @param userName
-   * @param password
-   * @returns A promise that resolves when the error assertion passes
-   * @author Pooja
-   */
-  async lockedoutUserMethod(
-    userName: string,
-    password: string,
-    lockedoutError: string
-  ) {
-    await this.submitCredentials(userName, password);
-    await expect(
-      this.invalidError,
-      "Epic sadface: Sorry, this user has been locked out."
-    ).toContainText(lockedoutError);
   }
 }

@@ -22,7 +22,7 @@ test.describe("Sauce demo Login Page", () => {
     { tag: ["@login", "@regression"] },
     async ({ loginPage }) => {
       await loginPage.goTo();
-      await loginPage.invalidLoginMethod(
+      await loginPage.verifyLoginError(
         "invalid_user",
         "Test@123",
         INVALID_CREDENTIALS_ERROR
@@ -34,7 +34,7 @@ test.describe("Sauce demo Login Page", () => {
     { tag: ["@login", "@regression"] },
     async ({ loginPage }) => {
       await loginPage.goTo();
-      await loginPage.lockedoutUserMethod(
+      await loginPage.verifyLoginError(
         "locked_out_user",
         "secret_sauce",
         LOCKED_OUT_ERROR
