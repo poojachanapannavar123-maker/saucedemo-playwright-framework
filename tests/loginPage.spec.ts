@@ -31,7 +31,7 @@ test.describe("Login Page", () => {
     }
   );
   test(
-    `TID003  - Locked out user sees an error`,
+    `TID003 - Locked out user sees an error`,
     { tag: ["@login", "@regression"] },
     async ({ loginPage }) => {
       await loginPage.goTo();

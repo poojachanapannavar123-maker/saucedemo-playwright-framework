@@ -1,4 +1,4 @@
-import { testUsers, products } from "../testdata/credentials";
+import { testUsers } from "../testdata/credentials";
 import { test } from "../fixtures/contextFixture";
 
 test.describe("Product Details Page", () => {

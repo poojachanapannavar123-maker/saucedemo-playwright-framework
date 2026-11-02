@@ -4,7 +4,7 @@ import { test } from "../fixtures/contextFixture";
 test.describe("Products Page", () => {
   for (const user of testUsers) {
     test(
-      `TID004- Open a random product - ${user.userName}`,
+      `TID004 - Open a random product - ${user.userName}`,
       { tag: ["@products", "@smoke"] },
       async ({ loginAs, productsPage }) => {
         await loginAs(user.userName, user.password);
@@ -13,7 +13,7 @@ test.describe("Products Page", () => {
     );
 
     test(
-      `TID005- Add a random product to the cart - ${user.userName}`,
+      `TID005 - Add a random product to the cart - ${user.userName}`,
       { tag: ["@products", "@smoke"] },
       async ({ loginAs, productsPage }) => {
         await loginAs(user.userName, user.password);
@@ -35,7 +35,7 @@ test.describe("Products Page", () => {
     );
 
     test(
-      `TID007 -  Remove a product from the list updates the badge - ${user.userName}`,
+      `TID007 - Remove a product from the list updates the badge - ${user.userName}`,
       { tag: ["@products", "@regression"] },
       async ({ loginAs, productsPage }) => {
         await loginAs(user.userName, user.password);
@@ -48,7 +48,7 @@ test.describe("Products Page", () => {
     );
 
     test(
-      `TID008- Product from test data is listed - ${user.userName}`,
+      `TID008 - Product from test data is listed - ${user.userName}`,
       { tag: ["@products", "@regression"] },
       async ({ loginAs, productsPage }) => {
         await loginAs(user.userName, user.password);
