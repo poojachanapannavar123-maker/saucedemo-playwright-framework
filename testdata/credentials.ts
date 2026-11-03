@@ -5,8 +5,8 @@ const env = (process.env.ENV || "qa").toLowerCase() as "qa" | "uat";
 export const testUsers = process.env.CI
   ? [
       {
-        userName: process.env.USERNAME!,
-        password: process.env.PASSWORD!,
+        userName: process.env.SAUCE_USERNAME!,
+        password: process.env.SAUCE_PASSWORD!,
       },
     ]
   : credentials[env].users;

@@ -1,10 +1,10 @@
-import { testUsers, products } from "../testdata/credentials";
+import { testUsers } from "../testdata/credentials";
 import { test } from "../fixtures/contextFixture";
 
-for (const user of testUsers) {
-  test.describe("Sauce Demo Product details Page", () => {
+test.describe("Product Details Page", () => {
+  for (const user of testUsers) {
     test(
-      `TID008-product description page actions - ${user.userName}`,
+      `TID009 - Details match the products list - ${user.userName}`,
       { tag: ["@pdp", "@regression"] },
       async ({ loginAs, productsPage, productDetailsPage }) => {
         test.skip(
@@ -13,7 +13,7 @@ for (const user of testUsers) {
         );
 
         await loginAs(user.userName, user.password);
-        const selectedProduct = await productsPage.randomlypickedproduct();
+        const selectedProduct = await productsPage.openRandomProduct();
 
         await productDetailsPage.verifyProductDetails(
           selectedProduct.productName,
@@ -24,23 +24,23 @@ for (const user of testUsers) {
     );
 
     test(
-      `TID009-verify add to cart button changes to remove-${user.userName}`,
+      `TID010 - Add and remove from the details page - ${user.userName}`,
       { tag: ["@pdp", "@regression"] },
       async ({ loginAs, productsPage, productDetailsPage }) => {
         await loginAs(user.userName, user.password);
-        await productsPage.randomlypickedproduct();
-        await productDetailsPage.verifyRemovebutton();
+        await productsPage.openRandomProduct();
+        await productDetailsPage.verifyAddAndRemoveFromCart();
       }
     );
 
     test(
-      `TID010-Verify Back to Products navigation -${user.userName}`,
+      `TID011 - Back to products navigation - ${user.userName}`,
       { tag: ["@pdp", "@regression"] },
       async ({ loginAs, productsPage, productDetailsPage }) => {
         await loginAs(user.userName, user.password);
-        await productsPage.randomlypickedproduct();
-        await productDetailsPage.verifyBacktoProductsNavigation();
+        await productsPage.openRandomProduct();
+        await productDetailsPage.verifyBackToProductsNavigation();
       }
     );
-  });
-}
+  }
+});
