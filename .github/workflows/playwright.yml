@@ -30,8 +30,8 @@ jobs:
       env:
          ENV: ${{inputs.environment||'qa'}}
          BASE_URL: ${{ inputs.environment=='uat' && vars.BASE_URL_UAT || vars.BASE_URL_QA}}
-         USERNAME: ${{ secrets.SAUCE_USERNAME }}
-         PASSWORD: ${{ secrets.SAUCE_PASSWORD }}
+         SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
+         SAUCE_PASSWORD: ${{ secrets.SAUCE_PASSWORD }}
       run: npx playwright test
     - uses: actions/upload-artifact@v6
       if: ${{ !cancelled() }}
