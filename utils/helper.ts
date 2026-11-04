@@ -23,7 +23,7 @@ export function getRandomIndex(count: number): number {
 export function toCents(priceText: string): number {
   const match = priceText.match(/\$(\d+(?:\.\d+)?)/);
   if (!match) {
-    throw new Error("Price text is not available");
+    throw new Error(`No price found in "${priceText}"`);
   } else {
     return Math.round(parseFloat(match[1]) * 100);
   }
