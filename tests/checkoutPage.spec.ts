@@ -26,7 +26,7 @@ test.describe("Checkout", () => {
 
     for (const { id, field, customer, expectedError } of missingFieldCases) {
       test(
-        `${id} - Missing ${field} shows an error ${user.userName}`,
+        `${id} - Missing ${field} shows an error - ${user.userName}`,
         { tag: ["@checkout", "@regression"] },
         async ({ loginAs, cartPage, productsPage, checkoutPage }) => {
           await loginAs(user.userName, user.password);
