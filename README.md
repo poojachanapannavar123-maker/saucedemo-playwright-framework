@@ -113,6 +113,7 @@ test(
 | Products        | TID004–008 | Open a random product; add a random product to the cart; cart badge counts up to 6; removing from the list updates the badge; product from test data is listed | `@products` `@smoke` `@regression` |
 | Product details | TID009–011 | Name, price, image and description match the list; add and remove from the details page; back to products navigation                                           | `@pdp` `@regression`               |
 | Cart            | TID012–017 | Added product and price shown; remove empties the cart; two products in order; continue shopping; checkout; cart keeps items after refresh                     | `@cart` `@smoke` `@regression`     |
+| Checkout        | TID018–023 | End-to-end order; missing first name / last name / postal code errors; item total, 8% tax and total add up; cancel keeps the cart                              | `@checkout` `@smoke` `@regression` |
 
 Every scenario runs for each configured test user on **5 browser/device projects**.
 
