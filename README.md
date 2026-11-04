@@ -201,8 +201,7 @@ To view a report from CI, open a workflow run and download the **playwright-repo
 
 ## Roadmap
 
-- [ ] End-to-end checkout flow → - [x] End-to-end checkout flow.
-- [ ] End-to-end checkout flow (checkout info, overview, order confirmation, price and tax checks)
+- [ x ] End-to-end checkout flow (checkout info, overview, order confirmation, price and tax checks)
 - [ ] Product sorting tests (name A–Z / Z–A, price low–high / high–low)
 - [ ] Logout, burger menu and Reset App State tests
 - [ ] Tests that catch the defects of `problem_user`, `error_user` and `performance_glitch_user`
