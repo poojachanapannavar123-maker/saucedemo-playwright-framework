@@ -20,16 +20,16 @@ test.describe("Product Sorting", () => {
             await productsPage.sortBy(startFrom);
           }
           await productsPage.sortBy(option);
-
+          await expect(productsPage.productNames).toHaveCount(
+            EXPECTED_PRODUCT_COUNT
+          );
           if (sortBy === "name") {
             const names = await productsPage.getProductNames();
             const expected = [...names].sort((a, b) => a.localeCompare(b));
             if (order === "descending") {
               expected.reverse();
             }
-            await expect(productsPage.productNames).toHaveCount(
-              EXPECTED_PRODUCT_COUNT
-            );
+
             expect(names, `Products are not sorted by ${option}`).toEqual(
               expected
             );
@@ -37,8 +37,6 @@ test.describe("Product Sorting", () => {
             const prices = await productsPage.getProductPrices();
             const expected = [...prices].sort((a, b) => a - b);
             if (order === "descending") expected.reverse();
-
-            expect(prices).toHaveLength(EXPECTED_PRODUCT_COUNT);
             expect(prices, `Products are not sorted by ${option}`).toEqual(
               expected
             );
