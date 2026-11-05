@@ -107,13 +107,14 @@ test(
 
 ## Test coverage
 
-| Feature         | Test IDs   | Scenarios covered                                                                                                                                              | Tags                               |
-| --------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
-| Login           | TID001–003 | Valid login for each test user; invalid credentials error; locked-out user error                                                                               | `@login` `@smoke` `@regression`    |
-| Products        | TID004–008 | Open a random product; add a random product to the cart; cart badge counts up to 6; removing from the list updates the badge; product from test data is listed | `@products` `@smoke` `@regression` |
-| Product details | TID009–011 | Name, price, image and description match the list; add and remove from the details page; back to products navigation                                           | `@pdp` `@regression`               |
-| Cart            | TID012–017 | Added product and price shown; remove empties the cart; two products in order; continue shopping; checkout; cart keeps items after refresh                     | `@cart` `@smoke` `@regression`     |
-| Checkout        | TID018–023 | End-to-end order; missing first name / last name / postal code errors; item total, 8% tax and total add up; cancel keeps the cart                              | `@checkout` `@smoke` `@regression` |
+| Feature         | Test IDs   | Scenarios covered                                                                                                                                              | Tags                                 |
+| --------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------ |
+| Login           | TID001–003 | Valid login for each test user; invalid credentials error; locked-out user error                                                                               | `@login` `@smoke` `@regression`      |
+| Products        | TID004–008 | Open a random product; add a random product to the cart; cart badge counts up to 6; removing from the list updates the badge; product from test data is listed | `@products` `@smoke` `@regression`   |
+| Product details | TID009–011 | Name, price, image and description match the list; add and remove from the details page; back to products navigation                                           | `@pdp` `@regression`                 |
+| Cart            | TID012–017 | Added product and price shown; remove empties the cart; two products in order; continue shopping; checkout; cart keeps items after refresh                     | `@cart` `@smoke` `@regression`       |
+| Checkout        | TID018–023 | End-to-end order; missing first name / last name / postal code errors; item total, 8% tax and total add up; cancel keeps the cart                              | `@checkout` `@smoke` `@regression`   |
+| Sorting         | TID024–027 | Name A→Z and Z→A, price low→high and high→low                                                                                                                  | `@products` `@sorting` `@regression` |
 
 Every scenario runs for each configured test user on **5 browser/device projects**.
 
@@ -202,7 +203,7 @@ To view a report from CI, open a workflow run and download the **playwright-repo
 ## Roadmap
 
 - [x] End-to-end checkout flow (checkout info, overview, order confirmation, price and tax checks)
-- [ ] Product sorting tests (name A–Z / Z–A, price low–high / high–low)
+- [x] Product sorting tests (name A–Z / Z–A, price low–high / high–low)
 - [ ] Logout, burger menu and Reset App State tests
 - [ ] Tests that catch the defects of `problem_user`, `error_user` and `performance_glitch_user`
 - [ ] Visual regression testing with `toHaveScreenshot()`

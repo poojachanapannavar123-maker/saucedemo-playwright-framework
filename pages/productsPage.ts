@@ -1,5 +1,5 @@
 import { Locator, Page, expect } from "@playwright/test";
-import { getRandomIndex } from "../utils/helper";
+import { getRandomIndex, toCents } from "../utils/helper";
 
 export class ProductsPage {
   readonly page: Page;
@@ -7,6 +7,11 @@ export class ProductsPage {
   readonly cartIcon: Locator;
   readonly cartBadge: Locator;
   readonly productListContainer: Locator;
+
+  readonly sortDropdown: Locator;
+  readonly activeSortOption: Locator;
+  readonly productNames: Locator;
+  readonly productPrices: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -16,6 +21,11 @@ export class ProductsPage {
     );
     this.cartIcon = page.locator('[data-test="shopping-cart-link"]');
     this.cartBadge = page.locator('[data-test="shopping-cart-badge"]');
+
+    this.sortDropdown = page.locator('[data-test="product-sort-container"]');
+    this.activeSortOption = page.locator('[data-test="active-option"]');
+    this.productNames = page.locator('[data-test="inventory-item-name"]');
+    this.productPrices = page.locator('[data-test="inventory-item-price"]');
   }
 
   /**
@@ -127,5 +137,30 @@ export class ProductsPage {
       hasText: productName,
     });
     await expect(matchingProduct).toBeVisible();
+  }
+
+  /**
+   * selects a sort option by it's visible label abd verifies it's applied
+   * @param optionLabel the label shown in the dropdown : eg: Price low to high
+   * @return A promise that resolves when the option is active
+   * @author Pooja
+   */
+  async sortBy(optionLabel: string): Promise<void> {
+    await this.sortDropdown.selectOption({ label: optionLabel });
+    await expect(this.activeSortOption).toHaveText(optionLabel);
+  }
+
+  /**
+   * Reads the product names in the order they are shown
+   * @returns The product names
+   * @author Pooja
+   */
+  async getProductNames(): Promise<string[]> {
+    return this.productNames.allInnerTexts();
+  }
+
+  async getProductPrices(): Promise<number[]> {
+    const priceTexts = await this.productPrices.allInnerTexts();
+    return priceTexts.map(toCents);
   }
 }
