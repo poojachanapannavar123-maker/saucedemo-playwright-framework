@@ -140,7 +140,7 @@ export class ProductsPage {
   }
 
   /**
-   * selects a sort option by it's visible label abd verifies it's applied
+   * selects a sort option by its visible label and verifies it's applied
    * @param optionLabel the label shown in the dropdown : eg: Price low to high
    * @returns A promise that resolves when the option is active
    * @author Pooja
@@ -159,6 +159,11 @@ export class ProductsPage {
     return this.productNames.allInnerTexts();
   }
 
+  /**
+   * Reads the product prices in the order they are shown
+   * @returns The product prices in cents, top to bottom
+   * @author Pooja
+   */
   async getProductPrices(): Promise<number[]> {
     const priceTexts = await this.productPrices.allInnerTexts();
     return priceTexts.map(toCents);

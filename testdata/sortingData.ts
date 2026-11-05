@@ -1,4 +1,4 @@
-export type sortCase = {
+export type SortCase = {
   id: string;
   option: string;
   sortBy: "name" | "price";
@@ -6,7 +6,7 @@ export type sortCase = {
   startFrom?: string;
 };
 
-export const sortCases: sortCase[] = [
+export const sortCases: SortCase[] = [
   {
     id: "TID024",
     option: "Name (A to Z)",
