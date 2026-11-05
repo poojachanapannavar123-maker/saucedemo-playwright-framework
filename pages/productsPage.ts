@@ -142,7 +142,7 @@ export class ProductsPage {
   /**
    * selects a sort option by it's visible label abd verifies it's applied
    * @param optionLabel the label shown in the dropdown : eg: Price low to high
-   * @return A promise that resolves when the option is active
+   * @returns A promise that resolves when the option is active
    * @author Pooja
    */
   async sortBy(optionLabel: string): Promise<void> {
