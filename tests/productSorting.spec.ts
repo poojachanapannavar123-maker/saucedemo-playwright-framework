@@ -27,7 +27,9 @@ test.describe("Product Sorting", () => {
             if (order === "descending") {
               expected.reverse();
             }
-            expect(names).toHaveLength(EXPECTED_PRODUCT_COUNT);
+            await expect(productsPage.productNames).toHaveCount(
+              EXPECTED_PRODUCT_COUNT
+            );
             expect(names, `Products are not sorted by ${option}`).toEqual(
               expected
             );
