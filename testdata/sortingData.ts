@@ -1,12 +1,12 @@
-export type sortCases = {
+export type sortCase = {
   id: string;
   option: string;
-  sortBy: string;
-  order: string;
+  sortBy: "name" | "price";
+  order: "ascending" | "descending";
   startFrom?: string;
 };
 
-export const sortCases: sortCases[] = [
+export const sortCases: sortCase[] = [
   {
     id: "TID024",
     option: "Name (A to Z)",
